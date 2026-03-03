@@ -95,7 +95,7 @@
         <div class="badges">
             <span class="badge">Makine: 750KG HT1</span>
             <span class="badge">Analiz Süresi: 40 Gün</span>
-            <span class="badge">Veri Kaynağı: Makine Operatör pH Ölç Komut Kayıtları</span>
+            <span class="badge">Veri Kaynağı: Makine Operatör Komut Kayıtları</span>
         </div>
     </div>
 
@@ -162,15 +162,15 @@
 
     <div id="cond-sum" class="view-section">
         <div class="alert-banner">
-            ⚡ <strong>İletkenlik Optimizasyonu (10 Saniye):</strong> pH verilerindeki numune ve bekleme refleksleri baz alınarak, Inline (akış) sensörünün anlık (10 sn) okuma kapasitesiyle hesaplanmıştır. Bu süre 3-5 saniyede tamamlanabilmektedir.
+            ⚡ <strong>İletkenlik Optimizasyonu (10 Saniye):</strong> Operatörün pH numunesi için harcadığı "yürüme, numune alma ve bekleme" süresi ortalamaları referans alınmış, Inline sensör okuma süresi ise sabit 10 saniye hesaplanmıştır.
         </div>
         
         <div class="comparison-grid">
             <div class="card red">
                 <div class="card-title">❌ Operatör İletkenlik Ölçüm</div>
                 <div class="data-row"><div class="data-label">İş Emri / Ölçüm Adedi</div><div class="data-value">45</div></div>
-                <div class="data-row"><div class="data-label">Ölçüm Süre Toplamı</div><div class="data-value">04:56:15</div></div>
-                <div class="data-row"><div class="data-label">Ölçüm Süre Ortalama</div><div class="data-value">00:06:35</div></div>
+                <div class="data-row"><div class="data-label">Ölçüm Süre Toplamı</div><div class="data-value">04:18:45</div></div>
+                <div class="data-row"><div class="data-label">Ölçüm Süre Ortalama</div><div class="data-value">00:05:45</div></div>
                 <div class="data-row"><div class="data-label">Bir Ölçümde Maks. Süre</div><div class="data-value">01:06:15</div></div>
             </div>
             <div class="card blue">
@@ -182,8 +182,8 @@
             </div>
             <div class="card green">
                 <div class="card-title">🚀 SENSÖRLE KAZANÇ</div>
-                <div class="data-row" style="margin-top: 40px;"><div class="data-label">Toplam Kazanılan Süre</div><div class="data-value" style="padding: 20px;">04:48:45</div></div>
-                <div class="data-row" style="margin-top: 40px;"><div class="data-label">Bir Ölçümde Ort. Kazanılan Süre</div><div class="data-value" style="padding: 20px;">00:06:25</div></div>
+                <div class="data-row" style="margin-top: 40px;"><div class="data-label">Toplam Kazanılan Süre</div><div class="data-value" style="padding: 20px;">04:11:15</div></div>
+                <div class="data-row" style="margin-top: 40px;"><div class="data-label">Bir Ölçümde Ort. Kazanılan Süre</div><div class="data-value" style="padding: 20px;">00:05:35</div></div>
             </div>
         </div>
 
@@ -192,17 +192,17 @@
             <div class="ticker-grid">
                 <div class="ticker-box">
                     <div class="ticker-label">KAPASİTE ARTIŞI</div>
-                    <div class="ticker-value"><span class="arrow">▲</span> 28.400 ₺</div>
+                    <div class="ticker-value"><span class="arrow">▲</span> 24.750 ₺</div>
                     <div class="ticker-sub">Kazanılan zaman ile İlave Boyama Ciro Katkısı</div>
                 </div>
                 <div class="ticker-box">
                     <div class="ticker-label">İŞÇİLİK TASARRUFU</div>
-                    <div class="ticker-value"><span class="arrow">▲</span> 640 ₺</div>
-                    <div class="ticker-sub">4.8 Saatlik Adam/Saat İşgücü Serbestisi</div>
+                    <div class="ticker-value"><span class="arrow">▲</span> 555 ₺</div>
+                    <div class="ticker-sub">4.2 Saatlik Adam/Saat İşgücü Serbestisi</div>
                 </div>
                 <div class="ticker-box">
                     <div class="ticker-label">ENERJİ TASARRUFU</div>
-                    <div class="ticker-value"><span class="arrow">▲</span> 7.215 ₺</div>
+                    <div class="ticker-value"><span class="arrow">▲</span> 6.280 ₺</div>
                     <div class="ticker-sub">Duruşlardaki Buhar/Elektrik İsrafı (1500₺/Saat)</div>
                 </div>
             </div>
@@ -217,7 +217,7 @@
     <div id="ph-det" class="view-section">
         <div class="charts-grid">
             <div class="chart-card">
-                <h3 class="chart-title">pH: Manuel Süre Dağılımı</h3>
+                <h3 class="chart-title">pH: Süre Dağılım Grafiği</h3>
                 <div class="chart-container"><canvas id="phPieChart"></canvas></div>
             </div>
             <div class="chart-card">
@@ -227,7 +227,7 @@
         </div>
 
         <table>
-            <thead><tr><th>Tarih / Saat</th><th>Program Adı</th><th>Vardiya</th><th>Manuel Bekleme</th><th>Sensör Süresi</th><th>Kazanılan Süre</th></tr></thead>
+            <thead><tr><th>Tarih / Saat</th><th>Program Adı</th><th>Vardiya</th><th>Operatör Bekleme</th><th>Sensör Süresi</th><th>Kazanılan Süre</th></tr></thead>
             <tbody id="phTableBody"></tbody>
         </table>
     </div>
@@ -235,7 +235,7 @@
     <div id="cond-det" class="view-section">
         <div class="charts-grid-single">
             <div class="chart-card">
-                <h3 class="chart-title">İletkenlik: Toplam Süre Dağılımı (45 İşlem)</h3>
+                <h3 class="chart-title">İletkenlik: Süre Dağılım Grafiği (45 İşlem)</h3>
                 <div class="chart-container"><canvas id="condPieChart"></canvas></div>
             </div>
         </div>
@@ -247,7 +247,6 @@
 </div>
 
 <script>
-    // Ortak Veri Seti
     const rawData = [
         { date: "2026-02-16 19:06:39", program: "POLY LYC 60-125 90 2C 90 1C 125 C 30", shift: "Vardiya 2", delaySec: 3975 },
         { date: "2026-01-20 00:37:40", program: "POLY LYC 60-125 90 2C 90 1C 125 C 30", shift: "Vardiya 3", delaySec: 2429 },
@@ -267,6 +266,12 @@
         const m = Math.floor(totalSeconds / 60);
         const s = totalSeconds % 60;
         return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    function formatToHoursMins(totalSeconds) {
+        const h = Math.floor(totalSeconds / 3600);
+        const m = Math.floor((totalSeconds % 3600) / 60);
+        return `${h} Saat ${m} Dk`;
     }
 
     function populateTable(tbodyId, data, sensorTime) {
@@ -289,29 +294,58 @@
 
     let chartsRendered = { ph: false, cond: false };
 
-    // pH Grafikleri
+    // pH Grafikleri (TAM EŞLEŞEN VERİLERLE)
     function renderPHCharts() {
         if (chartsRendered.ph) return;
         populateTable('phTableBody', rawData, 110);
 
-        const totalManualSec = 38000; 
+        // pH Dashboard Toplamları: 09:19:02 tam olarak 33542 saniyedir.
+        const totalManualSec = 33542; 
         const totalOps = 97;
         const sensorTime = 110;
-        const totalSensorSec = totalOps * sensorTime; 
-        const savedSecTotal = totalManualSec - totalSensorSec;
+        const totalSensorSec = totalOps * sensorTime; // 10670 saniye
+        const savedSecTotal = totalManualSec - totalSensorSec; // 22872 saniye
         const savedPercent = (savedSecTotal / totalManualSec) * 100;
         const remainingPercent = 100 - savedPercent;
+
+        const opText = 'Operatör Süresi (' + formatToHoursMins(totalManualSec) + ')';
+        const savedText = 'Kazanılan Süre (' + formatToHoursMins(savedSecTotal) + ')';
 
         new Chart(document.getElementById('phPieChart'), {
             type: 'doughnut',
             data: {
+                labels: [opText, savedText],
                 datasets: [
-                    { data: [100], backgroundColor: ['#ef4444'], label: 'Toplam Manuel', weight: 1 },
-                    { data: [savedPercent, remainingPercent], backgroundColor: ['#22c55e', 'rgba(0,0,0,0)'], label: 'Kazanç', weight: 0.5 }
-                ],
-                labels: ['Kazanılan Süre (7.6 Saat)', 'Zorunlu Sensör Süresi (2.9 Saat)']
+                    { data: [100], backgroundColor: ['#ef4444'], borderWidth: 0, weight: 1 },
+                    { data: [savedPercent, remainingPercent], backgroundColor: ['#22c55e', 'rgba(0,0,0,0)'], borderWidth: 0, weight: 0.7 }
+                ]
             },
-            options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { legend: { position: 'bottom', labels: { color: '#fff' } } } }
+            options: { 
+                responsive: true, maintainAspectRatio: false, cutout: '55%', 
+                plugins: { 
+                    legend: { 
+                        position: 'bottom', 
+                        labels: { 
+                            color: '#fff', font: { size: 13 },
+                            generateLabels: function(chart) {
+                                return [
+                                    { text: opText, fillStyle: '#ef4444', hidden: false, index: 0 },
+                                    { text: savedText, fillStyle: '#22c55e', hidden: false, index: 1 }
+                                ];
+                            }
+                        } 
+                    },
+                    tooltip: {
+                        filter: function(item) { return !(item.datasetIndex === 1 && item.dataIndex === 1); },
+                        callbacks: {
+                            label: function(context) {
+                                if (context.datasetIndex === 0) return 'Operatör Süresi: ' + formatToHoursMins(totalManualSec);
+                                return 'Kazanılan Süre: ' + formatToHoursMins(savedSecTotal) + ' (%' + savedPercent.toFixed(1) + ')';
+                            }
+                        }
+                    }
+                } 
+            }
         });
 
         new Chart(document.getElementById('phBarChart'), {
@@ -325,38 +359,52 @@
         chartsRendered.ph = true;
     }
 
-    // İletkenlik Grafikleri (Mavi Kazanç Rengi İptal -> Yeşil Yapıldı)
+    // İletkenlik Grafikleri (TAM EŞLEŞEN VERİLERLE)
     function renderCondCharts() {
         if (chartsRendered.cond) return;
 
+        // İletkenlik Dashboard Toplamları: 04:18:45 tam olarak 15525 saniyedir.
         const totalOps = 45;
-        const totalManualSec = 17775; 
+        const totalManualSec = 15525; 
         const sensorTime = 10;
-        const totalSensorSec = totalOps * sensorTime; 
-        const savedSecTotal = totalManualSec - totalSensorSec; 
+        const totalSensorSec = totalOps * sensorTime; // 450 saniye
+        const savedSecTotal = totalManualSec - totalSensorSec; // 15075 saniye
         const savedPercent = (savedSecTotal / totalManualSec) * 100;
         const remainingPercent = 100 - savedPercent;
+
+        const opText = 'Operatör Süresi (' + formatToHoursMins(totalManualSec) + ')';
+        const savedText = 'Kazanılan Süre (' + formatToHoursMins(savedSecTotal) + ')';
 
         new Chart(document.getElementById('condPieChart'), {
             type: 'doughnut',
             data: {
+                labels: [opText, savedText],
                 datasets: [
-                    { data: [100], backgroundColor: ['#ef4444'], label: 'Toplam Manuel (4.9 Saat)', weight: 1 },
-                    { data: [savedPercent, remainingPercent], backgroundColor: ['#22c55e', 'rgba(0,0,0,0)'], label: 'Kazanç', weight: 0.5 } // YEŞİL OLARAK GÜNCELLENDİ
-                ],
-                labels: ['Kazanılan Süre (4.8 Saat)', 'Inline Sensör Akış Süresi (Sadece 7.5 Dakika!)']
+                    { data: [100], backgroundColor: ['#ef4444'], borderWidth: 0, weight: 1 },
+                    { data: [savedPercent, remainingPercent], backgroundColor: ['#22c55e', 'rgba(0,0,0,0)'], borderWidth: 0, weight: 0.7 } 
+                ]
             },
             options: { 
-                responsive: true, 
-                maintainAspectRatio: false, 
-                cutout: '60%', 
+                responsive: true, maintainAspectRatio: false, cutout: '55%', 
                 plugins: { 
-                    legend: { position: 'bottom', labels: { color: '#fff' } },
+                    legend: { 
+                        position: 'bottom', 
+                        labels: { 
+                            color: '#fff', font: { size: 13 },
+                            generateLabels: function(chart) {
+                                return [
+                                    { text: opText, fillStyle: '#ef4444', hidden: false, index: 0 },
+                                    { text: savedText, fillStyle: '#22c55e', hidden: false, index: 1 }
+                                ];
+                            }
+                        } 
+                    },
                     tooltip: {
+                        filter: function(item) { return !(item.datasetIndex === 1 && item.dataIndex === 1); },
                         callbacks: {
                             label: function(context) {
-                                if (context.datasetIndex === 0) return 'Toplam Manuel: 4 Saat 56 Dakika';
-                                return context.dataIndex === 0 ? 'Kazanılan Süre: ~4.8 Saat (%' + savedPercent.toFixed(1) + ')' : 'Sensör Süresi: ~7.5 Dakika (%' + remainingPercent.toFixed(1) + ')';
+                                if (context.datasetIndex === 0) return 'Operatör Süresi: ' + formatToHoursMins(totalManualSec);
+                                return 'Kazanılan Süre: ' + formatToHoursMins(savedSecTotal) + ' (%' + savedPercent.toFixed(1) + ')';
                             }
                         }
                     }
