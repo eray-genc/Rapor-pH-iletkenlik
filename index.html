@@ -1,382 +1,382 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Işıl Tekstil - pH ve iletkenlik kazanç raporu</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent-red: #ef4444;
-            --accent-blue: #3b82f6;
-            --accent-green: #22c55e;
-            --border-color: #334155;
-            --tab-bg: #1e293b;
-            --tab-active: #3b82f6;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Işıl Tekstil - pH ve İletkenlik Kazanç Raporu</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-red: #ef4444;
+            --accent-blue: #3b82f6;
+            --accent-green: #22c55e;
+            --border-color: #334155;
+            --tab-bg: #1e293b;
+            --tab-active: #3b82f6;
+        }
 
-        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 20px; box-sizing: border-box; }
-        .container { max-width: 1200px; margin: 0 auto; }
-        
-        /* Header & Tabs */
-        .header { text-align: center; margin-bottom: 20px; }
-        .header h1 { margin: 0 0 10px 0; font-size: 26px; color: #ffffff; }
-        .badges { display: flex; justify-content: center; gap: 15px; margin-top: 10px; }
-        .badge { background-color: var(--card-bg); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid var(--border-color); color: #cbd5e1; }
-        
-        .tabs { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; }
-        .tab-btn { background-color: var(--tab-bg); color: var(--text-muted); border: 1px solid var(--border-color); padding: 12px 20px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; transition: all 0.3s; }
-        .tab-btn:hover { background-color: #2dd4bf; color: #fff; }
-        .tab-btn.active { background-color: var(--tab-active); color: white; border-color: var(--tab-active); box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4); }
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-main); margin: 0; padding: 20px; box-sizing: border-box; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        /* Header & Tabs */
+        .header { text-align: center; margin-bottom: 20px; }
+        .header h1 { margin: 0 0 10px 0; font-size: 26px; color: #ffffff; }
+        .badges { display: flex; justify-content: center; gap: 15px; margin-top: 10px; }
+        .badge { background-color: var(--card-bg); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; border: 1px solid var(--border-color); color: #cbd5e1; }
+        
+        .tabs { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 30px; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; }
+        .tab-btn { background-color: var(--tab-bg); color: var(--text-muted); border: 1px solid var(--border-color); padding: 12px 20px; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; transition: all 0.3s; }
+        .tab-btn:hover { background-color: #2dd4bf; color: #fff; }
+        .tab-btn.active { background-color: var(--tab-active); color: white; border-color: var(--tab-active); box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4); }
 
-        .alert-banner { background: linear-gradient(90deg, rgba(59,130,246,0.1) 0%, rgba(34,197,94,0.1) 100%); border: 1px solid var(--accent-blue); color: #93c5fd; padding: 15px 20px; border-radius: 8px; text-align: center; margin-bottom: 25px; font-size: 15px; }
-        .alert-banner strong { color: #60a5fa; }
+        .alert-banner { background: linear-gradient(90deg, rgba(59,130,246,0.1) 0%, rgba(34,197,94,0.1) 100%); border: 1px solid var(--accent-blue); color: #93c5fd; padding: 15px 20px; border-radius: 8px; text-align: center; margin-bottom: 25px; font-size: 15px; }
+        .alert-banner strong { color: #60a5fa; }
 
-        /* Grid & Cards */
-        .comparison-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .card { background-color: var(--card-bg); border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); border-top: 4px solid transparent; }
-        .card-title { font-size: 18px; font-weight: bold; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); text-transform: uppercase; }
-        
-        .card.red { border-top-color: var(--accent-red); } .card.red .card-title { color: var(--accent-red); }
-        .card.blue { border-top-color: var(--accent-blue); } .card.blue .card-title { color: var(--accent-blue); }
-        .card.green { border-top-color: var(--accent-green); } .card.green .card-title { color: var(--accent-green); }
+        /* Grid & Cards */
+        .comparison-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .card { background-color: var(--card-bg); border-radius: 12px; padding: 20px; text-align: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.3); border-top: 4px solid transparent; }
+        .card-title { font-size: 18px; font-weight: bold; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color); text-transform: uppercase; }
+        
+        .card.red { border-top-color: var(--accent-red); } .card.red .card-title { color: var(--accent-red); }
+        .card.blue { border-top-color: var(--accent-blue); } .card.blue .card-title { color: var(--accent-blue); }
+        .card.green { border-top-color: var(--accent-green); } .card.green .card-title { color: var(--accent-green); }
 
-        .data-row { margin-bottom: 15px; }
-        .data-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 5px; }
-        .data-value { font-size: 22px; font-weight: bold; font-family: monospace; padding: 8px; border-radius: 8px; background-color: rgba(0,0,0,0.3); }
-        
-        .card.red .data-value { color: #ff8a80; }
-        .card.blue .data-value { color: #82b1ff; }
-        .card.green .data-value { color: #b9f6ca; font-size: 26px; }
+        .data-row { margin-bottom: 15px; }
+        .data-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 5px; }
+        .data-value { font-size: 22px; font-weight: bold; font-family: monospace; padding: 8px; border-radius: 8px; background-color: rgba(0,0,0,0.3); }
+        
+        .card.red .data-value { color: #ff8a80; }
+        .card.blue .data-value { color: #82b1ff; }
+        .card.green .data-value { color: #b9f6ca; font-size: 26px; }
 
-        /* Ticker / Finans Modülü */
-        .financial-module { background-color: #000000; border-radius: 12px; padding: 25px; border: 1px solid #333; margin-bottom: 15px; }
-        .module-title { color: #ffffff; font-size: 18px; margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .module-title span { font-size: 12px; color: var(--accent-green); background: rgba(34, 197, 94, 0.1); padding: 4px 10px; border-radius: 12px; }
-        .ticker-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
-        .ticker-box { background: linear-gradient(180deg, rgba(34,197,94,0.08) 0%, rgba(0,0,0,0) 100%); padding: 15px; border-radius: 8px; border-bottom: 2px solid var(--accent-green); text-align: right; }
-        .ticker-label { font-size: 13px; color: #888; margin-bottom: 5px; text-align: left; font-weight: bold; }
-        .ticker-value { font-family: 'Courier New', Courier, monospace; font-size: 28px; font-weight: bold; color: var(--accent-green); text-shadow: 0 0 10px rgba(34, 197, 94, 0.4); margin-bottom: 5px; display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
-        .ticker-sub { font-size: 11px; color: #666; text-align: right; }
-        
-        .disclaimer-box { background: rgba(30, 41, 59, 0.8); border-left: 4px solid var(--accent-blue); padding: 15px; border-radius: 8px; margin-bottom: 40px; font-size: 12.5px; color: #cbd5e1; line-height: 1.5; }
-        .disclaimer-box strong { color: #fff; }
+        /* Ticker / Finans Modülü */
+        .financial-module { background-color: #000000; border-radius: 12px; padding: 25px; border: 1px solid #333; margin-bottom: 15px; }
+        .module-title { color: #ffffff; font-size: 18px; margin-top: 0; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .module-title span { font-size: 12px; color: var(--accent-green); background: rgba(34, 197, 94, 0.1); padding: 4px 10px; border-radius: 12px; }
+        .ticker-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .ticker-box { background: linear-gradient(180deg, rgba(34,197,94,0.08) 0%, rgba(0,0,0,0) 100%); padding: 15px; border-radius: 8px; border-bottom: 2px solid var(--accent-green); text-align: right; }
+        .ticker-label { font-size: 13px; color: #888; margin-bottom: 5px; text-align: left; font-weight: bold; }
+        .ticker-value { font-family: 'Courier New', Courier, monospace; font-size: 28px; font-weight: bold; color: var(--accent-green); text-shadow: 0 0 10px rgba(34, 197, 94, 0.4); margin-bottom: 5px; display: flex; align-items: center; justify-content: flex-end; gap: 8px; }
+        .ticker-sub { font-size: 11px; color: #666; text-align: right; }
+        
+        .disclaimer-box { background: rgba(30, 41, 59, 0.8); border-left: 4px solid var(--accent-blue); padding: 15px; border-radius: 8px; margin-bottom: 40px; font-size: 12.5px; color: #cbd5e1; line-height: 1.5; }
+        .disclaimer-box strong { color: #fff; }
 
-        /* Chart & Tables */
-        .charts-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; margin-bottom: 30px; }
-        .charts-grid-single { display: grid; grid-template-columns: 1fr; max-width: 600px; margin: 0 auto 30px auto; gap: 20px; }
-        .chart-card { background-color: var(--card-bg); border-radius: 12px; padding: 20px; border: 1px solid var(--border-color); }
-        .chart-title { text-align: center; font-size: 14px; color: var(--text-muted); margin-top: 0; margin-bottom: 15px; text-transform: uppercase; }
-        .chart-container { position: relative; height: 250px; width: 100%; }
-        
-        table { width: 100%; border-collapse: collapse; text-align: left; background-color: var(--card-bg); border-radius: 12px; overflow: hidden; margin-bottom: 40px;}
-        th { padding: 12px; font-size: 12px; color: var(--text-muted); background-color: #0f172a; text-transform: uppercase; border-bottom: 2px solid var(--border-color); }
-        td { padding: 10px 12px; border-bottom: 1px solid var(--border-color); font-size: 13px; }
-        tr:hover { background-color: rgba(255, 255, 255, 0.02); }
-        .badge-red { color: #ff8a80; background: rgba(239, 68, 68, 0.1); padding: 4px 8px; border-radius: 4px; font-weight: bold; }
-        .badge-green { color: #b9f6ca; background: rgba(34, 197, 94, 0.1); padding: 4px 8px; border-radius: 4px; font-weight: bold; }
-        .badge-blue { color: #82b1ff; background: rgba(59, 130, 246, 0.1); padding: 4px 8px; border-radius: 4px; font-weight: bold;}
+        /* Chart & Tables */
+        .charts-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; margin-bottom: 30px; }
+        .charts-grid-single { display: grid; grid-template-columns: 1fr; max-width: 600px; margin: 0 auto 30px auto; gap: 20px; }
+        .chart-card { background-color: var(--card-bg); border-radius: 12px; padding: 20px; border: 1px solid var(--border-color); }
+        .chart-title { text-align: center; font-size: 14px; color: var(--text-muted); margin-top: 0; margin-bottom: 15px; text-transform: uppercase; }
+        .chart-container { position: relative; height: 250px; width: 100%; }
+        
+        table { width: 100%; border-collapse: collapse; text-align: left; background-color: var(--card-bg); border-radius: 12px; overflow: hidden; margin-bottom: 40px;}
+        th { padding: 12px; font-size: 12px; color: var(--text-muted); background-color: #0f172a; text-transform: uppercase; border-bottom: 2px solid var(--border-color); }
+        td { padding: 10px 12px; border-bottom: 1px solid var(--border-color); font-size: 13px; }
+        tr:hover { background-color: rgba(255, 255, 255, 0.02); }
+        .badge-red { color: #ff8a80; background: rgba(239, 68, 68, 0.1); padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+        .badge-green { color: #b9f6ca; background: rgba(34, 197, 94, 0.1); padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+        .badge-blue { color: #82b1ff; background: rgba(59, 130, 246, 0.1); padding: 4px 8px; border-radius: 4px; font-weight: bold;}
 
-        /* Views */
-        .view-section { display: none; animation: fadeIn 0.4s ease; }
-        .view-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
+        /* Views */
+        .view-section { display: none; animation: fadeIn 0.4s ease; }
+        .view-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="header">
-        <h1>IŞIL TEKSTİL - pH ve İletkenlik Sensörü Kazanç Analizleri</h1>
-        <div class="badges">
-            <span class="badge">Makine: 750KG HT1</span>
-            <span class="badge">Analiz Süresi: 40 Gün</span>
-            <span class="badge">Veri Kaynağı: Makine Operatör pH Ölç Komut Kayıtları</span>
-        </div>
-    </div>
+    <div class="header">
+        <h1>IŞIL TEKSTİL - pH ve İletkenlik Sensörü Kazanç Analizleri</h1>
+        <div class="badges">
+            <span class="badge">Makine: 750KG HT1</span>
+            <span class="badge">Analiz Süresi: 40 Gün</span>
+            <span class="badge">Veri Kaynağı: Makine Operatör pH Ölç Komut Kayıtları</span>
+        </div>
+    </div>
 
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('ph-sum', this)">📊 1. pH ÖZET</button>
-        <button class="tab-btn" onclick="switchTab('cond-sum', this)">📊 2. İLETKENLİK ÖZET</button>
-        <button class="tab-btn" onclick="switchTab('ph-det', this)">🧪 3. pH ANALİZİ</button>
-        <button class="tab-btn" onclick="switchTab('cond-det', this)">⚡ 4. İLETKENLİK ANALİZİ</button>
-    </div>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('ph-sum', this)">📊 1. pH ÖZET</button>
+        <button class="tab-btn" onclick="switchTab('cond-sum', this)">📊 2. İLETKENLİK ÖZET</button>
+        <button class="tab-btn" onclick="switchTab('ph-det', this)">🧪 3. pH ANALİZİ</button>
+        <button class="tab-btn" onclick="switchTab('cond-det', this)">⚡ 4. İLETKENLİK ANALİZİ</button>
+    </div>
 
-    <div id="ph-sum" class="view-section active">
-        <div class="alert-banner">
-            🧪 <strong>pH Optimizasyonu (110 Saniye İşletmede Mevcut Süre):</strong> Manuel ölçümdeki operatör gecikmeleri sıfırlanarak, makine dinamiğine uygun 110 saniyelik işletme süresi baz alınmıştır. Bu süre 40 saniyeye kadar düşebilir.
-        </div>
-        
-        <div class="comparison-grid">
-            <div class="card red">
-                <div class="card-title">❌ Operatör pH Ölçüm</div>
-                <div class="data-row"><div class="data-label">Ölçüm Adedi</div><div class="data-value">97</div></div>
-                <div class="data-row"><div class="data-label">Ölçüm Süre Toplamı</div><div class="data-value">09:19:02</div></div>
-                <div class="data-row"><div class="data-label">Ölçüm Süre Ortalama</div><div class="data-value">00:05:45</div></div>
-                <div class="data-row"><div class="data-label">Bir Ölçümde Maks. Süre</div><div class="data-value">01:06:15</div></div>
-            </div>
-            <div class="card blue">
-                <div class="card-title">✅ Sensörle pH Ölçüm</div>
-                <div class="data-row"><div class="data-label">Ölçüm Adedi</div><div class="data-value">97</div></div>
-                <div class="data-row"><div class="data-label">Ölçüm Süre Toplamı</div><div class="data-value">02:57:50</div></div>
-                <div class="data-row"><div class="data-label">Ölçüm Süresi Ortalama</div><div class="data-value">00:01:50</div></div>
-                <div class="data-row"><div class="data-label">Bir Ölçümde Maks. Süre</div><div class="data-value">00:01:50</div></div>
-            </div>
-            <div class="card green">
-                <div class="card-title">🚀 SENSÖRLE KAZANÇ</div>
-                <div class="data-row" style="margin-top: 40px;"><div class="data-label">Toplam Kazanılan Süre</div><div class="data-value" style="padding: 20px;">06:21:12</div></div>
-                <div class="data-row" style="margin-top: 40px;"><div class="data-label">Bir Ölçümde Ort. Kazanılan Süre</div><div class="data-value" style="padding: 20px;">00:03:55</div></div>
-            </div>
-        </div>
+    <div id="ph-sum" class="view-section active">
+        <div class="alert-banner">
+            🧪 <strong>pH Optimizasyonu (110 Saniye İşletmede Mevcut Süre):</strong> Manuel ölçümdeki operatör gecikmeleri sıfırlanarak, makine dinamiğine uygun 110 saniyelik işletme süresi baz alınmıştır. Bu süre 40 saniyeye kadar düşebilir.
+        </div>
+        
+        <div class="comparison-grid">
+            <div class="card red">
+                <div class="card-title">❌ Operatör pH Ölçüm</div>
+                <div class="data-row"><div class="data-label">Ölçüm Adedi</div><div class="data-value">97</div></div>
+                <div class="data-row"><div class="data-label">Ölçüm Süre Toplamı</div><div class="data-value">09:19:02</div></div>
+                <div class="data-row"><div class="data-label">Ölçüm Süre Ortalama</div><div class="data-value">00:05:45</div></div>
+                <div class="data-row"><div class="data-label">Bir Ölçümde Maks. Süre</div><div class="data-value">01:06:15</div></div>
+            </div>
+            <div class="card blue">
+                <div class="card-title">✅ Sensörle pH Ölçüm</div>
+                <div class="data-row"><div class="data-label">Ölçüm Adedi</div><div class="data-value">97</div></div>
+                <div class="data-row"><div class="data-label">Ölçüm Süre Toplamı</div><div class="data-value">02:57:50</div></div>
+                <div class="data-row"><div class="data-label">Ölçüm Süresi Ortalama</div><div class="data-value">00:01:50</div></div>
+                <div class="data-row"><div class="data-label">Bir Ölçümde Maks. Süre</div><div class="data-value">00:01:50</div></div>
+            </div>
+            <div class="card green">
+                <div class="card-title">🚀 SENSÖRLE KAZANÇ</div>
+                <div class="data-row" style="margin-top: 40px;"><div class="data-label">Toplam Kazanılan Süre</div><div class="data-value" style="padding: 20px;">06:21:12</div></div>
+                <div class="data-row" style="margin-top: 40px;"><div class="data-label">Bir Ölçümde Ort. Kazanılan Süre</div><div class="data-value" style="padding: 20px;">00:03:55</div></div>
+            </div>
+        </div>
 
-        <div class="financial-module">
-            <h2 class="module-title">pH FİNANSAL KAZANÇ <span>40 Günlük Veri Üzerinden</span></h2>
-            <div class="ticker-grid">
-                <div class="ticker-box">
-                    <div class="ticker-label">KAPASİTE ARTIŞI</div>
-                    <div class="ticker-value"><span class="arrow">▲</span> 37.500 ₺</div>
-                    <div class="ticker-sub">Kazanılan zaman ile +1 İlave Boyama Ciro Katkısı</div>
-                </div>
-                <div class="ticker-box">
-                    <div class="ticker-label">İŞÇİLİK TASARRUFU</div>
-                    <div class="ticker-value"><span class="arrow">▲</span> 845 ₺</div>
-                    <div class="ticker-sub">6.3 Saatlik Adam/Saat İşgücü Serbestisi</div>
-                </div>
-                <div class="ticker-box">
-                    <div class="ticker-label">ENERJİ TASARRUFU</div>
-                    <div class="ticker-value"><span class="arrow">▲</span> 9.525 ₺</div>
-                    <div class="ticker-sub">Duruşlardaki Buhar/Elektrik İsrafı (1500₺/Saat)</div>
-                </div>
-            </div>
-        </div>
-        <div class="disclaimer-box">
-            <strong>📌 Finansal Hesaplama Kriterleri:</strong><br>
-            • Kapasite artışı üretim maliyeti (kârlılık) makine kapasitesine oranla <strong>1.5 Euro / kg</strong> olarak alınmıştır.<br>
-            • İşçilik tasarrufu hesaplanırken sahadaki gerçeklik baz alınmış, 1 operatörün 3 makineye baktığı varsayılarak hesaplama yapılmıştır <strong>(1.600 Euro Aylık Maliyet / 3 Makine)</strong>.
-        </div>
-    </div>
+        <div class="financial-module">
+            <h2 class="module-title">pH FİNANSAL KAZANÇ <span>40 Günlük Veri Üzerinden</span></h2>
+            <div class="ticker-grid">
+                <div class="ticker-box">
+                    <div class="ticker-label">KAPASİTE ARTIŞI</div>
+                    <div class="ticker-value"><span class="arrow">▲</span> 37.500 ₺</div>
+                    <div class="ticker-sub">Kazanılan zaman ile +1 İlave Boyama Ciro Katkısı</div>
+                </div>
+                <div class="ticker-box">
+                    <div class="ticker-label">İŞÇİLİK TASARRUFU</div>
+                    <div class="ticker-value"><span class="arrow">▲</span> 845 ₺</div>
+                    <div class="ticker-sub">6.3 Saatlik Adam/Saat İşgücü Serbestisi</div>
+                </div>
+                <div class="ticker-box">
+                    <div class="ticker-label">ENERJİ TASARRUFU</div>
+                    <div class="ticker-value"><span class="arrow">▲</span> 9.525 ₺</div>
+                    <div class="ticker-sub">Duruşlardaki Buhar/Elektrik İsrafı (1500₺/Saat)</div>
+                </div>
+            </div>
+        </div>
+        <div class="disclaimer-box">
+            <strong>📌 Finansal Hesaplama Kriterleri:</strong><br>
+            • Kapasite artışı üretim maliyeti (kârlılık) makine kapasitesine oranla <strong>1.5 Euro / kg</strong> olarak alınmıştır.<br>
+            • İşçilik tasarrufu hesaplanırken sahadaki gerçeklik baz alınmış, 1 operatörün 3 makineye baktığı varsayılarak hesaplama yapılmıştır <strong>(1.600 Euro Aylık Maliyet / 3 Makine)</strong>.
+        </div>
+    </div>
 
-    <div id="cond-sum" class="view-section">
-        <div class="alert-banner">
-            ⚡ <strong>İletkenlik Optimizasyonu (10 Saniye):</strong> pH verilerindeki numune ve bekleme refleksleri baz alınarak, Inline (akış) sensörünün anlık (10 sn) okuma kapasitesiyle hesaplanmıştır. Bu süre 3-5 saniyede tamamlanabilmektedir.
-        </div>
-        
-        <div class="comparison-grid">
-            <div class="card red">
-                <div class="card-title">❌ Operatör İletkenlik Ölçüm</div>
-                <div class="data-row"><div class="data-label">İş Emri / Ölçüm Adedi</div><div class="data-value">45</div></div>
-                <div class="data-row"><div class="data-label">Ölçüm Süre Toplamı</div><div class="data-value">04:56:15</div></div>
-                <div class="data-row"><div class="data-label">Ölçüm Süre Ortalama</div><div class="data-value">00:06:35</div></div>
-                <div class="data-row"><div class="data-label">Bir Ölçümde Maks. Süre</div><div class="data-value">01:06:15</div></div>
-            </div>
-            <div class="card blue">
-                <div class="card-title">✅ Sensörle İletkenlik Ölçüm</div>
-                <div class="data-row"><div class="data-label">Ölçüm Adedi</div><div class="data-value">45</div></div>
-                <div class="data-row"><div class="data-label">Ölçüm Süre Toplamı</div><div class="data-value">00:07:30</div></div>
-                <div class="data-row"><div class="data-label">Ölçüm Süresi Ortalama</div><div class="data-value">00:00:10</div></div>
-                <div class="data-row"><div class="data-label">Bir Ölçümde Maks. Süre</div><div class="data-value">00:00:10</div></div>
-            </div>
-            <div class="card green">
-                <div class="card-title">🚀 SENSÖRLE KAZANÇ</div>
-                <div class="data-row" style="margin-top: 40px;"><div class="data-label">Toplam Kazanılan Süre</div><div class="data-value" style="padding: 20px;">04:48:45</div></div>
-                <div class="data-row" style="margin-top: 40px;"><div class="data-label">Bir Ölçümde Ort. Kazanılan Süre</div><div class="data-value" style="padding: 20px;">00:06:25</div></div>
-            </div>
-        </div>
+    <div id="cond-sum" class="view-section">
+        <div class="alert-banner">
+            ⚡ <strong>İletkenlik Optimizasyonu (10 Saniye):</strong> pH verilerindeki numune ve bekleme refleksleri baz alınarak, Inline (akış) sensörünün anlık (10 sn) okuma kapasitesiyle hesaplanmıştır. Bu süre 3-5 saniyede tamamlanabilmektedir.
+        </div>
+        
+        <div class="comparison-grid">
+            <div class="card red">
+                <div class="card-title">❌ Operatör İletkenlik Ölçüm</div>
+                <div class="data-row"><div class="data-label">İş Emri / Ölçüm Adedi</div><div class="data-value">45</div></div>
+                <div class="data-row"><div class="data-label">Ölçüm Süre Toplamı</div><div class="data-value">04:56:15</div></div>
+                <div class="data-row"><div class="data-label">Ölçüm Süre Ortalama</div><div class="data-value">00:06:35</div></div>
+                <div class="data-row"><div class="data-label">Bir Ölçümde Maks. Süre</div><div class="data-value">01:06:15</div></div>
+            </div>
+            <div class="card blue">
+                <div class="card-title">✅ Sensörle İletkenlik Ölçüm</div>
+                <div class="data-row"><div class="data-label">Ölçüm Adedi</div><div class="data-value">45</div></div>
+                <div class="data-row"><div class="data-label">Ölçüm Süre Toplamı</div><div class="data-value">00:07:30</div></div>
+                <div class="data-row"><div class="data-label">Ölçüm Süresi Ortalama</div><div class="data-value">00:00:10</div></div>
+                <div class="data-row"><div class="data-label">Bir Ölçümde Maks. Süre</div><div class="data-value">00:00:10</div></div>
+            </div>
+            <div class="card green">
+                <div class="card-title">🚀 SENSÖRLE KAZANÇ</div>
+                <div class="data-row" style="margin-top: 40px;"><div class="data-label">Toplam Kazanılan Süre</div><div class="data-value" style="padding: 20px;">04:48:45</div></div>
+                <div class="data-row" style="margin-top: 40px;"><div class="data-label">Bir Ölçümde Ort. Kazanılan Süre</div><div class="data-value" style="padding: 20px;">00:06:25</div></div>
+            </div>
+        </div>
 
-        <div class="financial-module">
-            <h2 class="module-title">İLETKENLİK FİNANSAL KAZANÇ <span>40 Günlük Veri Üzerinden</span></h2>
-            <div class="ticker-grid">
-                <div class="ticker-box">
-                    <div class="ticker-label">KAPASİTE ARTIŞI</div>
-                    <div class="ticker-value"><span class="arrow">▲</span> 28.400 ₺</div>
-                    <div class="ticker-sub">Kazanılan zaman ile İlave Boyama Ciro Katkısı</div>
-                </div>
-                <div class="ticker-box">
-                    <div class="ticker-label">İŞÇİLİK TASARRUFU</div>
-                    <div class="ticker-value"><span class="arrow">▲</span> 640 ₺</div>
-                    <div class="ticker-sub">4.8 Saatlik Adam/Saat İşgücü Serbestisi</div>
-                </div>
-                <div class="ticker-box">
-                    <div class="ticker-label">ENERJİ TASARRUFU</div>
-                    <div class="ticker-value"><span class="arrow">▲</span> 7.215 ₺</div>
-                    <div class="ticker-sub">Duruşlardaki Buhar/Elektrik İsrafı (1500₺/Saat)</div>
-                </div>
-            </div>
-        </div>
-        <div class="disclaimer-box">
-            <strong>📌 Finansal Hesaplama Kriterleri:</strong><br>
-            • Kapasite artışı üretim maliyeti (kârlılık) makine kapasitesine oranla <strong>1.5 Euro / kg</strong> olarak alınmıştır.<br>
-            • İşçilik tasarrufu hesaplanırken sahadaki gerçeklik baz alınmış, 1 operatörün 3 makineye baktığı varsayılarak hesaplama yapılmıştır <strong>(1.600 Euro Aylık Maliyet / 3 Makine)</strong>.
-        </div>
-    </div>
+        <div class="financial-module">
+            <h2 class="module-title">İLETKENLİK FİNANSAL KAZANÇ <span>40 Günlük Veri Üzerinden</span></h2>
+            <div class="ticker-grid">
+                <div class="ticker-box">
+                    <div class="ticker-label">KAPASİTE ARTIŞI</div>
+                    <div class="ticker-value"><span class="arrow">▲</span> 28.400 ₺</div>
+                    <div class="ticker-sub">Kazanılan zaman ile İlave Boyama Ciro Katkısı</div>
+                </div>
+                <div class="ticker-box">
+                    <div class="ticker-label">İŞÇİLİK TASARRUFU</div>
+                    <div class="ticker-value"><span class="arrow">▲</span> 640 ₺</div>
+                    <div class="ticker-sub">4.8 Saatlik Adam/Saat İşgücü Serbestisi</div>
+                </div>
+                <div class="ticker-box">
+                    <div class="ticker-label">ENERJİ TASARRUFU</div>
+                    <div class="ticker-value"><span class="arrow">▲</span> 7.215 ₺</div>
+                    <div class="ticker-sub">Duruşlardaki Buhar/Elektrik İsrafı (1500₺/Saat)</div>
+                </div>
+            </div>
+        </div>
+        <div class="disclaimer-box">
+            <strong>📌 Finansal Hesaplama Kriterleri:</strong><br>
+            • Kapasite artışı üretim maliyeti (kârlılık) makine kapasitesine oranla <strong>1.5 Euro / kg</strong> olarak alınmıştır.<br>
+            • İşçilik tasarrufu hesaplanırken sahadaki gerçeklik baz alınmış, 1 operatörün 3 makineye baktığı varsayılarak hesaplama yapılmıştır <strong>(1.600 Euro Aylık Maliyet / 3 Makine)</strong>.
+        </div>
+    </div>
 
-    <div id="ph-det" class="view-section">
-        <div class="charts-grid">
-            <div class="chart-card">
-                <h3 class="chart-title">pH: Manuel Süre Dağılımı</h3>
-                <div class="chart-container"><canvas id="phPieChart"></canvas></div>
-            </div>
-            <div class="chart-card">
-                <h3 class="chart-title">pH: En Yüksek Duruşlar (Dakika)</h3>
-                <div class="chart-container"><canvas id="phBarChart"></canvas></div>
-            </div>
-        </div>
+    <div id="ph-det" class="view-section">
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3 class="chart-title">pH: Manuel Süre Dağılımı</h3>
+                <div class="chart-container"><canvas id="phPieChart"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h3 class="chart-title">pH: En Yüksek Duruşlar (Dakika)</h3>
+                <div class="chart-container"><canvas id="phBarChart"></canvas></div>
+            </div>
+        </div>
 
-        <table>
-            <thead><tr><th>Tarih / Saat</th><th>Program Adı</th><th>Vardiya</th><th>Manuel Bekleme</th><th>Sensör Süresi</th><th>Kazanılan Süre</th></tr></thead>
-            <tbody id="phTableBody"></tbody>
-        </table>
-    </div>
+        <table>
+            <thead><tr><th>Tarih / Saat</th><th>Program Adı</th><th>Vardiya</th><th>Manuel Bekleme</th><th>Sensör Süresi</th><th>Kazanılan Süre</th></tr></thead>
+            <tbody id="phTableBody"></tbody>
+        </table>
+    </div>
 
-    <div id="cond-det" class="view-section">
-        <div class="charts-grid-single">
-            <div class="chart-card">
-                <h3 class="chart-title">İletkenlik: Toplam Süre Dağılımı (45 İşlem)</h3>
-                <div class="chart-container"><canvas id="condPieChart"></canvas></div>
-            </div>
-        </div>
-        <div style="text-align: center; color: var(--text-muted); font-style: italic; margin-top: 20px;">
-            * İletkenlik (Inline) numune alımı bekleme gerektirmediğinden anlık 10 saniyelik okuma üzerinden toplam kazanç tablosu oluşturulmuştur. Bu süre 3-5 saniyede gerçekleşebilmektedir.
-        </div>
-    </div>
+    <div id="cond-det" class="view-section">
+        <div class="charts-grid-single">
+            <div class="chart-card">
+                <h3 class="chart-title">İletkenlik: Toplam Süre Dağılımı (45 İşlem)</h3>
+                <div class="chart-container"><canvas id="condPieChart"></canvas></div>
+            </div>
+        </div>
+        <div style="text-align: center; color: var(--text-muted); font-style: italic; margin-top: 20px;">
+            * İletkenlik (Inline) numune alımı bekleme gerektirmediğinden anlık 10 saniyelik okuma üzerinden toplam kazanç tablosu oluşturulmuştur. Bu süre 3-5 saniyede gerçekleşebilmektedir.
+        </div>
+    </div>
 
 </div>
 
 <script>
-    // Ortak Veri Seti
-    const rawData = [
-        { date: "2026-02-16 19:06:39", program: "POLY LYC 60-125 90 2C 90 1C 125 C 30", shift: "Vardiya 2", delaySec: 3975 },
-        { date: "2026-01-20 00:37:40", program: "POLY LYC 60-125 90 2C 90 1C 125 C 30", shift: "Vardiya 3", delaySec: 2429 },
-        { date: "2026-02-13 23:48:45", program: "POLY LYC 60-125 90 2C 90 1C 125 C 30", shift: "Vardiya 2", delaySec: 2151 },
-        { date: "2026-01-15 15:53:26", program: "POLY LYC 60-125 90 2C 90 1C 125 C 30", shift: "Vardiya 1", delaySec: 2069 },
-        { date: "2026-02-16 15:54:27", program: "POLY LYC 60-125 90 2C 90 1C 125 C 30", shift: "Vardiya 1", delaySec: 1773 },
-        { date: "2026-01-22 01:26:45", program: "POLYESTER BLACK CTW BYM", shift: "Vardiya 3", delaySec: 1493 },
-        { date: "2026-02-18 05:05:25", program: "POLY LYC 60-125 90 2C 90 1C 125 C 30", shift: "Vardiya 3", delaySec: 1344 },
-        { date: "2026-02-16 20:32:50", program: "POLY LYC 60-125 90 2C 90 1C 125 C 30", shift: "Vardiya 2", delaySec: 1071 },
-        { date: "2026-01-21 22:51:34", program: "POLYESTER BLACK CTW BYM", shift: "Vardiya 2", delaySec: 840 }
-    ];
+    // Ortak Veri Seti
+    const rawData = [
+        { date: "2026-02-16 19:06:39", program: "POLY LYC 60-125 90 2C 90 1C 125 C 30", shift: "Vardiya 2", delaySec: 3975 },
+        { date: "2026-01-20 00:37:40", program: "POLY LYC 60-125 90 2C 90 1C 125 C 30", shift: "Vardiya 3", delaySec: 2429 },
+        { date: "2026-02-13 23:48:45", program: "POLY LYC 60-125 90 2C 90 1C 125 C 30", shift: "Vardiya 2", delaySec: 2151 },
+        { date: "2026-01-15 15:53:26", program: "POLY LYC 60-125 90 2C 90 1C 125 C 30", shift: "Vardiya 1", delaySec: 2069 },
+        { date: "2026-02-16 15:54:27", program: "POLY LYC 60-125 90 2C 90 1C 125 C 30", shift: "Vardiya 1", delaySec: 1773 },
+        { date: "2026-01-22 01:26:45", program: "POLYESTER BLACK CTW BYM", shift: "Vardiya 3", delaySec: 1493 },
+        { date: "2026-02-18 05:05:25", program: "POLY LYC 60-125 90 2C 90 1C 125 C 30", shift: "Vardiya 3", delaySec: 1344 },
+        { date: "2026-02-16 20:32:50", program: "POLY LYC 60-125 90 2C 90 1C 125 C 30", shift: "Vardiya 2", delaySec: 1071 },
+        { date: "2026-01-21 22:51:34", program: "POLYESTER BLACK CTW BYM", shift: "Vardiya 2", delaySec: 840 }
+    ];
 
-    rawData.sort((a, b) => b.delaySec - a.delaySec);
+    rawData.sort((a, b) => b.delaySec - a.delaySec);
 
-    function formatTime(totalSeconds) {
-        if (totalSeconds < 0) return "00:00";
-        const m = Math.floor(totalSeconds / 60);
-        const s = totalSeconds % 60;
-        return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-    }
+    function formatTime(totalSeconds) {
+        if (totalSeconds < 0) return "00:00";
+        const m = Math.floor(totalSeconds / 60);
+        const s = totalSeconds % 60;
+        return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
 
-    function populateTable(tbodyId, data, sensorTime) {
-        const tbody = document.getElementById(tbodyId);
-        tbody.innerHTML = '';
-        data.forEach(row => {
-            const saved = row.delaySec - sensorTime;
-            const tr = document.createElement("tr");
-            tr.innerHTML = `
-                <td>${row.date}</td>
-                <td>${row.program}</td>
-                <td>${row.shift}</td>
-                <td><span class="badge-red">${formatTime(row.delaySec)} (Dk:Sn)</span></td>
-                <td><span class="badge-blue">${formatTime(sensorTime)}</span></td>
-                <td><span class="badge-green">+ ${formatTime(saved)}</span></td>
-            `;
-            tbody.appendChild(tr);
-        });
-    }
+    function populateTable(tbodyId, data, sensorTime) {
+        const tbody = document.getElementById(tbodyId);
+        tbody.innerHTML = '';
+        data.forEach(row => {
+            const saved = row.delaySec - sensorTime;
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${row.date}</td>
+                <td>${row.program}</td>
+                <td>${row.shift}</td>
+                <td><span class="badge-red">${formatTime(row.delaySec)} (Dk:Sn)</span></td>
+                <td><span class="badge-blue">${formatTime(sensorTime)}</span></td>
+                <td><span class="badge-green">+ ${formatTime(saved)}</span></td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
 
-    let chartsRendered = { ph: false, cond: false };
+    let chartsRendered = { ph: false, cond: false };
 
-    // pH Grafikleri
-    function renderPHCharts() {
-        if (chartsRendered.ph) return;
-        populateTable('phTableBody', rawData, 110);
+    // pH Grafikleri
+    function renderPHCharts() {
+        if (chartsRendered.ph) return;
+        populateTable('phTableBody', rawData, 110);
 
-        const totalManualSec = 38000; 
-        const totalOps = 97;
-        const sensorTime = 110;
-        const totalSensorSec = totalOps * sensorTime; 
-        const savedSecTotal = totalManualSec - totalSensorSec;
-        const savedPercent = (savedSecTotal / totalManualSec) * 100;
-        const remainingPercent = 100 - savedPercent;
+        const totalManualSec = 38000; 
+        const totalOps = 97;
+        const sensorTime = 110;
+        const totalSensorSec = totalOps * sensorTime; 
+        const savedSecTotal = totalManualSec - totalSensorSec;
+        const savedPercent = (savedSecTotal / totalManualSec) * 100;
+        const remainingPercent = 100 - savedPercent;
 
-        new Chart(document.getElementById('phPieChart'), {
-            type: 'doughnut',
-            data: {
-                datasets: [
-                    { data: [100], backgroundColor: ['#ef4444'], label: 'Toplam Manuel', weight: 1 },
-                    { data: [savedPercent, remainingPercent], backgroundColor: ['#22c55e', 'rgba(0,0,0,0)'], label: 'Kazanç', weight: 0.5 }
-                ],
-                labels: ['Kazanılan Süre (7.6 Saat)', 'Zorunlu Sensör Süresi (2.9 Saat)']
-            },
-            options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { legend: { position: 'bottom', labels: { color: '#fff' } } } }
-        });
+        new Chart(document.getElementById('phPieChart'), {
+            type: 'doughnut',
+            data: {
+                datasets: [
+                    { data: [100], backgroundColor: ['#ef4444'], label: 'Toplam Manuel', weight: 1 },
+                    { data: [savedPercent, remainingPercent], backgroundColor: ['#22c55e', 'rgba(0,0,0,0)'], label: 'Kazanç', weight: 0.5 }
+                ],
+                labels: ['Kazanılan Süre (7.6 Saat)', 'Zorunlu Sensör Süresi (2.9 Saat)']
+            },
+            options: { responsive: true, maintainAspectRatio: false, cutout: '60%', plugins: { legend: { position: 'bottom', labels: { color: '#fff' } } } }
+        });
 
-        new Chart(document.getElementById('phBarChart'), {
-            type: 'bar',
-            data: {
-                labels: rawData.slice(0,5).map(d => d.date.split(' ')[0]),
-                datasets: [{ label: 'Dakika', data: rawData.slice(0,5).map(d => Math.round(d.delaySec / 60)), backgroundColor: '#ef4444' }]
-            },
-            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-        });
-        chartsRendered.ph = true;
-    }
+        new Chart(document.getElementById('phBarChart'), {
+            type: 'bar',
+            data: {
+                labels: rawData.slice(0,5).map(d => d.date.split(' ')[0]),
+                datasets: [{ label: 'Dakika', data: rawData.slice(0,5).map(d => Math.round(d.delaySec / 60)), backgroundColor: '#ef4444' }]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+        });
+        chartsRendered.ph = true;
+    }
 
-    // İletkenlik Grafikleri (Mavi Kazanç Rengi İptal -> Yeşil Yapıldı)
-    function renderCondCharts() {
-        if (chartsRendered.cond) return;
+    // İletkenlik Grafikleri (Mavi Kazanç Rengi İptal -> Yeşil Yapıldı)
+    function renderCondCharts() {
+        if (chartsRendered.cond) return;
 
-        const totalOps = 45;
-        const totalManualSec = 17775; 
-        const sensorTime = 10;
-        const totalSensorSec = totalOps * sensorTime; 
-        const savedSecTotal = totalManualSec - totalSensorSec; 
-        const savedPercent = (savedSecTotal / totalManualSec) * 100;
-        const remainingPercent = 100 - savedPercent;
+        const totalOps = 45;
+        const totalManualSec = 17775; 
+        const sensorTime = 10;
+        const totalSensorSec = totalOps * sensorTime; 
+        const savedSecTotal = totalManualSec - totalSensorSec; 
+        const savedPercent = (savedSecTotal / totalManualSec) * 100;
+        const remainingPercent = 100 - savedPercent;
 
-        new Chart(document.getElementById('condPieChart'), {
-            type: 'doughnut',
-            data: {
-                datasets: [
-                    { data: [100], backgroundColor: ['#ef4444'], label: 'Toplam Manuel (4.9 Saat)', weight: 1 },
-                    { data: [savedPercent, remainingPercent], backgroundColor: ['#22c55e', 'rgba(0,0,0,0)'], label: 'Kazanç', weight: 0.5 } // YEŞİL OLARAK GÜNCELLENDİ
-                ],
-                labels: ['Kazanılan Süre (4.8 Saat)', 'Inline Sensör Akış Süresi (Sadece 7.5 Dakika!)']
-            },
-            options: { 
-                responsive: true, 
-                maintainAspectRatio: false, 
-                cutout: '60%', 
-                plugins: { 
-                    legend: { position: 'bottom', labels: { color: '#fff' } },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                if (context.datasetIndex === 0) return 'Toplam Manuel: 4 Saat 56 Dakika';
-                                return context.dataIndex === 0 ? 'Kazanılan Süre: ~4.8 Saat (%' + savedPercent.toFixed(1) + ')' : 'Sensör Süresi: ~7.5 Dakika (%' + remainingPercent.toFixed(1) + ')';
-                            }
-                        }
-                    }
-                } 
-            }
-        });
-        chartsRendered.cond = true;
-    }
+        new Chart(document.getElementById('condPieChart'), {
+            type: 'doughnut',
+            data: {
+                datasets: [
+                    { data: [100], backgroundColor: ['#ef4444'], label: 'Toplam Manuel (4.9 Saat)', weight: 1 },
+                    { data: [savedPercent, remainingPercent], backgroundColor: ['#22c55e', 'rgba(0,0,0,0)'], label: 'Kazanç', weight: 0.5 } // YEŞİL OLARAK GÜNCELLENDİ
+                ],
+                labels: ['Kazanılan Süre (4.8 Saat)', 'Inline Sensör Akış Süresi (Sadece 7.5 Dakika!)']
+            },
+            options: { 
+                responsive: true, 
+                maintainAspectRatio: false, 
+                cutout: '60%', 
+                plugins: { 
+                    legend: { position: 'bottom', labels: { color: '#fff' } },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                if (context.datasetIndex === 0) return 'Toplam Manuel: 4 Saat 56 Dakika';
+                                return context.dataIndex === 0 ? 'Kazanılan Süre: ~4.8 Saat (%' + savedPercent.toFixed(1) + ')' : 'Sensör Süresi: ~7.5 Dakika (%' + remainingPercent.toFixed(1) + ')';
+                            }
+                        }
+                    }
+                } 
+            }
+        });
+        chartsRendered.cond = true;
+    }
 
-    // Sekme Geçiş Mantığı
-    function switchTab(tabId, btnElement) {
-        document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-        
-        document.getElementById(tabId).classList.add('active');
-        btnElement.classList.add('active');
+    // Sekme Geçiş Mantığı
+    function switchTab(tabId, btnElement) {
+        document.querySelectorAll('.view-section').forEach(sec => sec.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        btnElement.classList.add('active');
 
-        if (tabId === 'ph-det') renderPHCharts();
-        if (tabId === 'cond-det') renderCondCharts();
-    }
+        if (tabId === 'ph-det') renderPHCharts();
+        if (tabId === 'cond-det') renderCondCharts();
+    }
 </script>
 </body>
 </html>
